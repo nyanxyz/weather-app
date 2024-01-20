@@ -6,112 +6,65 @@
  */
 
 import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import {Image, SafeAreaView, StyleSheet, View} from 'react-native';
+import LocationIcon from './assets/icons/location.svg';
+import SettingsIcon from './assets/icons/settings.svg';
+import HamburgerIcon from './assets/icons/hamburger.svg';
+import {HStack, VStack} from './src/components/stack.tsx';
+import {Txt} from './src/components/txt.tsx';
+import {colors} from './src/constants/colors.ts';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+function App(): React.JSX.Element {
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
+    <View style={styles.view}>
+      <Image
+        source={require('./assets/images/cloud-background.jpg')}
+        style={styles.bgImage}
+      />
+
+      <SafeAreaView>
+        <VStack>
+          <HStack
+            justify={'space-between'}
+            align={'center'}
+            style={styles.header}>
+            <HStack align={'center'} gap={6}>
+              <LocationIcon />
+              <Txt size={13} color={colors.primary500}>
+                경기도 안양시 만안구
+              </Txt>
+            </HStack>
+            <HStack gap={10} align={'center'}>
+              <HamburgerIcon />
+              <SettingsIcon />
+            </HStack>
+          </HStack>
+        </VStack>
+      </SafeAreaView>
     </View>
   );
 }
 
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-}
-
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  view: {
+    flex: 1,
+    fontFamily: 'GmarketSansTTFMedium',
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+  bgImage: {
+    resizeMode: 'cover',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
+  header: {
+    paddingVertical: 15,
+    paddingRight: 17,
+    paddingLeft: 21,
   },
-  highlight: {
-    fontWeight: '700',
+  text: {
+    fontFamily: 'GmarketSansTTFMedium',
   },
 });
 
