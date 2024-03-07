@@ -4,6 +4,7 @@ import {StyleSheet, Text} from 'react-native';
 interface TxtProps {
   children: string;
   size?: number;
+  lineHeight?: number;
   color?: string;
   weight?: 'light' | 'medium' | 'bold';
   style?: any;
@@ -12,12 +13,13 @@ interface TxtProps {
 export function Txt({
   children,
   size,
+  lineHeight,
   color,
   weight = 'medium',
   style,
 }: TxtProps) {
   return (
-    <Text style={[styles[weight], {fontSize: size, color}, style]}>
+    <Text style={[styles[weight], {fontSize: size, lineHeight, color}, style]}>
       {children}
     </Text>
   );

@@ -6,66 +6,40 @@
  */
 
 import React from 'react';
-import {Image, SafeAreaView, StyleSheet, View} from 'react-native';
-import LocationIcon from './assets/icons/location.svg';
-import SettingsIcon from './assets/icons/settings.svg';
-import HamburgerIcon from './assets/icons/hamburger.svg';
-import {HStack, VStack} from './src/components/stack.tsx';
-import {Txt} from './src/components/txt.tsx';
-import {colors} from './src/constants/colors.ts';
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
+import {WeatherView} from './src/views/weather-view.tsx';
 
-function App(): React.JSX.Element {
-  return (
-    <View style={styles.view}>
-      <Image
-        source={require('./assets/images/cloud-background.jpg')}
-        style={styles.bgImage}
-      />
+// function onAppStateChange(status: AppStateStatus) {
+//   if (Platform.OS !== 'web') {
+//     focusManager.setFocused(status === 'active');
+//   }
+// }
+//
+// onlineManager.setEventListener(setOnline => {
+//   return NetInfo.addEventListener(state => {
+//     setOnline(!!state.isConnected);
+//   });
+// });
 
-      <SafeAreaView>
-        <VStack>
-          <HStack
-            justify={'space-between'}
-            align={'center'}
-            style={styles.header}>
-            <HStack align={'center'} gap={6}>
-              <LocationIcon />
-              <Txt size={13} color={colors.primary500}>
-                경기도 안양시 만안구
-              </Txt>
-            </HStack>
-            <HStack gap={10} align={'center'}>
-              <HamburgerIcon />
-              <SettingsIcon />
-            </HStack>
-          </HStack>
-        </VStack>
-      </SafeAreaView>
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  view: {
-    flex: 1,
-    fontFamily: 'GmarketSansTTFMedium',
-  },
-  bgImage: {
-    resizeMode: 'cover',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-  },
-  header: {
-    paddingVertical: 15,
-    paddingRight: 17,
-    paddingLeft: 21,
-  },
-  text: {
-    fontFamily: 'GmarketSansTTFMedium',
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+    },
   },
 });
+
+function App(): React.JSX.Element {
+  // useEffect(() => {
+  //   const subscription = AppState.addEventListener('change', onAppStateChange);
+  //   return () => subscription.remove();
+  // }, []);
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <WeatherView />
+    </QueryClientProvider>
+  );
+}
 
 export default App;
